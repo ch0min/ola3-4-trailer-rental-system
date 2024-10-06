@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"rental_service/db"
-	"rental_service/models"
+	// "rental_service/models"
 )
 
 // TODO: getalltrailers with location - addresses (search by zipcode)
@@ -21,11 +21,11 @@ import (
 // @Success 200 {array} models.Trailer
 // @Router /api/trailer [get]
 func GetAllTrailers(w http.ResponseWriter, r *http.Request) {
-	todos, err := db.FetchAllTrailers()
+	trailers, err := db.FetchAllTrailers()
 	if err != nil {
 		log.Fatal(err)
 	}
-	res, _ := json.Marshal(todos)
+	res, _ := json.Marshal(trailers)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
@@ -66,20 +66,20 @@ func GetTrailerByZip(w http.ResponseWriter, r *http.Request) {
 // @Router /api/rental [post]
 func CreateRental(w http.ResponseWriter, r *http.Request) {
 	// TODO: make function read trailer_id and user_id from body and use in the db function
-	var trailerId int
-	var userId int
-
-	err := json.NewDecoder(r.Body).Decode()
-
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	err = db.CreateRental(trailerId, userId)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-
+	// var trailerId int
+	// var userId int
+	//
+	// err := json.NewDecoder(r.Body).Decode()
+	//
+	// if err != nil {
+	// 	http.Error(w, err.Error(), http.StatusInternalServerError)
+	// 	return
+	// }
+	// err = db.CreateRental(trailerId, userId)
+	// if err != nil {
+	// 	http.Error(w, err.Error(), http.StatusBadRequest)
+	// 	return
+	// }
+	//
 	w.WriteHeader(http.StatusCreated)
 }

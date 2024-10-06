@@ -15,9 +15,9 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/todo": {
+        "/api/rental": {
             "post": {
-                "description": "Create a new todo entry in the database",
+                "description": "Create a new rental entry in the database",
                 "consumes": [
                     "application/json"
                 ],
@@ -25,36 +25,30 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "todos"
+                    "rental"
                 ],
-                "summary": "Create a new todo",
+                "summary": "Create a new rental",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Todo title",
-                        "name": "title",
+                        "description": "trailerId",
+                        "name": "trailer_id",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "Todo description",
-                        "name": "description",
+                        "description": "userId",
+                        "name": "user_id",
                         "in": "query",
                         "required": true
-                    },
-                    {
-                        "type": "boolean",
-                        "description": "Completion status",
-                        "name": "completed",
-                        "in": "query"
                     }
                 ],
                 "responses": {
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/models.Todo"
+                            "$ref": "#/definitions/models.Rental"
                         }
                     },
                     "400": {
@@ -72,91 +66,75 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/todo/{id}": {
+        "/api/trailer": {
             "get": {
-                "description": "Fetches a todo based on the id from the database",
+                "description": "Fetches a list of all trailers from the database",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "todos"
+                    "trailers"
                 ],
-                "summary": "Get todo",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Todo ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.Todo"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "Delete a todo based on the id from the database",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "todos"
-                ],
-                "summary": "Delete todo",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Todo ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.Todo"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "404": {
-                        "description": "Not found",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/todos": {
-            "get": {
-                "description": "Fetches a list of all todos from the database",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "todos"
-                ],
-                "summary": "Get all todos",
+                "summary": "Get all trailers",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.Todo"
+                                "$ref": "#/definitions/models.Trailer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/trailer/{zip}": {
+            "get": {
+                "description": "Fetches a trailer based on the zipcode from the database",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "trailer"
+                ],
+                "summary": "Get a trailer",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Zip",
+                        "name": "zip",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Trailer"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user": {
+            "post": {
+                "description": "Fetches a list of all trailers from the database",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "trailers"
+                ],
+                "summary": "Get all trailers",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Customer"
                             }
                         }
                     }
@@ -165,25 +143,114 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "models.Todo": {
+        "models.Address": {
             "type": "object",
             "properties": {
-                "body": {
+                "city": {
                     "type": "string"
-                },
-                "category": {
-                    "type": "string"
-                },
-                "deadline": {
-                    "type": "string"
-                },
-                "done": {
-                    "type": "boolean"
                 },
                 "id": {
                     "type": "integer"
                 },
-                "title": {
+                "state": {
+                    "type": "string"
+                },
+                "street": {
+                    "type": "string"
+                },
+                "zipcode": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Customer": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "$ref": "#/definitions/models.Address"
+                },
+                "address_id": {
+                    "type": "integer"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phone_number": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Location": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "$ref": "#/definitions/models.Address"
+                },
+                "address_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Rental": {
+            "type": "object",
+            "properties": {
+                "customer": {
+                    "$ref": "#/definitions/models.Customer"
+                },
+                "customer_id": {
+                    "type": "integer"
+                },
+                "end_time": {
+                    "type": "string"
+                },
+                "excess_fee": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "rental_fee": {
+                    "type": "number"
+                },
+                "start_time": {
+                    "type": "string"
+                },
+                "trailer": {
+                    "$ref": "#/definitions/models.Trailer"
+                },
+                "trailer_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Trailer": {
+            "type": "object",
+            "properties": {
+                "availability_status": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "location": {
+                    "$ref": "#/definitions/models.Location"
+                },
+                "location_id": {
+                    "type": "integer"
+                },
+                "number": {
                     "type": "string"
                 }
             }

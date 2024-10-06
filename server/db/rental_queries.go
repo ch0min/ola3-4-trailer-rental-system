@@ -1,7 +1,7 @@
 package db
 
 import (
-	"database/sql"
+	// "database/sql"
 	"log"
 
 	"rental_service/models"
@@ -20,10 +20,10 @@ func FetchAllTrailers() ([]models.Trailer, error) {
 		var trailer models.Trailer
 
 		//TODO: change fields to match trailer
-		var category sql.NullString
-		var deadline sql.NullTime
+		// var category sql.NullString
+		// var deadline sql.NullTime
 
-		err := rows.Scan(&trailer.ID, &trailer.Title, &trailer.Body, &trailer.Done, &category, &deadline)
+		err := rows.Scan()
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -43,10 +43,7 @@ func GetTrailerByZip(zip string) (models.Trailer, error) {
 	row := DB.QueryRow("SELECT id, title, text, isCompleted, category, deadline FROM todo WHERE id = $1", zip)
 
 	// TODO: update fields to match trailer
-	var category sql.NullString
-	var deadline sql.NullTime
-
-	err := row.Scan(&trailer.ID, &trailer.Title, &trailer.Body, &trailer.Done, &category, &deadline)
+	err := row.Scan()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -56,9 +53,10 @@ func GetTrailerByZip(zip string) (models.Trailer, error) {
 
 func CreateRental(trailerId int, userId int) error {
 	// TODO change implementation
-	var lastInsertId int
-	query := `INSERT INTO todo (title, text, iscompleted, category, deadline)
-			  VALUES ($1, $2, $3, $4, $5) RETURNING id`
-	err := DB.QueryRow(query, todo.Title, todo.Body, todo.Done, todo.Category, todo.Deadline).Scan(&lastInsertId)
-	return err
+	// var lastInsertId int
+	// query := `INSERT INTO todo (title, text, iscompleted, category, deadline)
+	// 		  VALUES ($1, $2, $3, $4, $5) RETURNING id`
+	// err := DB.QueryRow().Scan(&lastInsertId)
+	// return err
+	return nil
 }

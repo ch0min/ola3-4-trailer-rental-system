@@ -2,9 +2,8 @@ package handlers
 
 import (
 	"net/http"
-
-	"rental_service/db"
-	"rental_service/models"
+	// "rental_service/db"
+	// "rental_service/models"
 )
 
 // CreateUser godoc
@@ -15,7 +14,7 @@ import (
 // @Success 200 {array} models.Customer
 // @Router /api/user [post]
 func CreateUser(w http.ResponseWriter, r *http.Request) {
-	err := db.CreateUser()
+	// err := db.CreateUser()
 	// TODO: maybe error handling
 
 	w.WriteHeader(http.StatusCreated)
