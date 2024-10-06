@@ -52,7 +52,7 @@ The core of MyTrailer is the trailer rental process, including booking, insuranc
 ### Bounded Context Diagram
 This diagram shows the different bounded contexts and their relationships.
 
-![](models/bcd.png)
+![](docs/models/bcd.png)
 
 ---
 
@@ -75,7 +75,7 @@ This diagram shows the different bounded contexts and their relationships.
 - **Value Object: Location**
   - Properties: `locationName`, `locationAddress`
 
-![](models/domain.png)
+![](docs/models/domain.png)
 
 ---
 
@@ -96,12 +96,12 @@ Since the system has several independent components (rental, payment, partnershi
 We chose the **Context** and **Component** diagrams because they provide the right balance of abstraction for this project. The Context diagram helps us visualize how the system interacts with external actors, while the Component diagram shows the internal structure of key services. This allows us to focus on system design without getting too detailed or technical, making it suitable for this small project within the given timeframe.
 
 - **Context Diagram**: Illustrates how the MyTrailer system interacts with external entities like the app, payment gateways, and store partners.
-![](models/c4_cntx.png)
+![](docs/models/c4_cntx.png)
 
 ---
 
 - **Component Diagram**: Shows the internal services of the system, such as `RentalService`, `PaymentService`, `PartnershipService`, etc.
-![](models/c4_comp.png)
+![](docs/models/c4_comp.png)
 
 ---
 
