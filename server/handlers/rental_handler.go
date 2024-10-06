@@ -5,9 +5,13 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/oTuff/go-startkode/db"
-	"github.com/oTuff/go-startkode/models"
+	"rental_service/db"
+	"rental_service/models"
 )
+
+// TODO: getalltrailers with location - addresses (search by zipcode)
+
+// TODO: create new rental - need user login before. ("guest"-user service, / maybe also payment service)
 
 // GetAllTodos godoc
 // @Summary Get all todos

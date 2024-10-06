@@ -5,10 +5,10 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/oTuff/go-startkode/db"
-	_ "github.com/oTuff/go-startkode/docs"
-	"github.com/oTuff/go-startkode/handlers"
 	"github.com/rs/cors"
+	"rental_service/db"
+	_ "rental_service/docs"
+	"rental_service/handlers"
 
 	httpSwagger "github.com/swaggo/http-swagger/v2"
 )

@@ -71,4 +71,3 @@ type Insurance struct {
 	InsuranceDetails string  `json:"insurance_details"`
 	Rental           Rental  `json:"rental"`
 }
-

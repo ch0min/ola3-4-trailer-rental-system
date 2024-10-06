@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"log"
 
-	"github.com/oTuff/go-startkode/models"
+	"rental_service/models"
 )
 
 func FetchAllTodos() ([]models.Todo, error) {

@@ -1,4 +1,4 @@
-module github.com/oTuff/go-startkode
+module rental_service
 
 go 1.23.1
 
