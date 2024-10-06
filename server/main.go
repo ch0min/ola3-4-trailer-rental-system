@@ -22,10 +22,10 @@ func run() (*http.ServeMux, error) {
 
 	// Routes
 	mux.HandleFunc("/api/docs/", httpSwagger.WrapHandler)
-	mux.HandleFunc("/api/todos", handlers.GetAllTodos)
-	mux.HandleFunc("/api/todo/{id}", handlers.GetTodo)
-	mux.HandleFunc("DELETE /api/todo/{id}", handlers.DeleteTodo)
-	mux.HandleFunc("POST /api/todo", handlers.CreateTodo)
+	mux.HandleFunc("GET /api/trailer", handlers.GetAllTrailers)
+	mux.HandleFunc("GET /api/trailer/{zip}", handlers.GetTrailerByZip)
+	mux.HandleFunc("POST /api/user", handlers.CreateUser)
+	mux.HandleFunc("POST /api/rental", handlers.CreateRental)
 
 	return mux, nil
 }

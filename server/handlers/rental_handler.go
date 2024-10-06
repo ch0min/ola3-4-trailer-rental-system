@@ -13,15 +13,15 @@ import (
 
 // TODO: create new rental - need user login before. ("guest"-user service, / maybe also payment service)
 
-// GetAllTodos godoc
-// @Summary Get all todos
-// @Description Fetches a list of all todos from the database
-// @Tags todos
+// GetAllTrailers godoc
+// @Summary Get all trailers
+// @Description Fetches a list of all trailers from the database
+// @Tags trailers
 // @Produce application/json
-// @Success 200 {array} models.Todo
-// @Router /api/todos [get]
-func GetAllTodos(w http.ResponseWriter, r *http.Request) {
-	todos, err := db.FetchAllTodos()
+// @Success 200 {array} models.Trailer
+// @Router /api/trailer [get]
+func GetAllTrailers(w http.ResponseWriter, r *http.Request) {
+	todos, err := db.FetchAllTrailers()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -31,71 +31,51 @@ func GetAllTodos(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
-// GetTodo godoc
-// @Summary Get todo
-// @Description Fetches a todo based on the id from the database
-// @Tags todos
+// GetTrailerByZip godoc
+// @Summary Get a trailer
+// @Description Fetches a trailer based on the zipcode from the database
+// @Tags trailer
 // @Produce application/json
-// @Param id path string true "Todo ID"
-// @Success 200 {object} models.Todo
-// @Router /api/todo/{id} [get]
-func GetTodo(w http.ResponseWriter, r *http.Request) {
-	id := r.PathValue("id")
-	todo, err := db.GetTodoById(id)
+// @Param zip path string true "Zip"
+// @Success 200 {object} models.Trailer
+// @Router /api/trailer/{zip} [get]
+func GetTrailerByZip(w http.ResponseWriter, r *http.Request) {
+	zip := r.PathValue("zip")
+	trailer, err := db.GetTrailerByZip(zip)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	res, _ := json.Marshal(todo)
+	res, _ := json.Marshal(trailer)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
 }
 
-// DeleteTodo godoc
-// @Summary Delete todo
-// @Description Delete a todo based on the id from the database
-// @Tags todos
-// @Produce application/json
-// @Param id path string true "Todo ID"
-// @Success 200 {object} models.Todo
-// @Failure 400 {string} string "Bad request"
-// @Failure 404 {string} string "Not found"
-// @Router /api/todo/{id} [delete]
-func DeleteTodo(w http.ResponseWriter, r *http.Request) {
-	id := r.PathValue("id")
-	err := db.DeleteTodoById(id)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	// w.Write(res)
-}
-
-// CreateTodo godoc
-// @Summary Create a new todo
-// @Description Create a new todo entry in the database
-// @Tags todos
+// CreateRental godoc
+// @Summary Create a new rental
+// @Description Create a new rental entry in the database
+// @Tags rental
 // @Accept  application/json
 // @Produce application/json
-// @Param title query string true "Todo title"
-// @Param description query string true "Todo description"
-// @Param completed query bool false "Completion status"
-// @Success 201 {object} models.Todo
+// @Param trailer_id query string true "trailerId"
+// @Param user_id query string true "userId"
+// @Success 201 {object} models.Rental
 // @Failure 400 {string} string "Bad request"
 // @Failure 500 {string} string "Internal server error"
-// @Router /api/todo [post]
-func CreateTodo(w http.ResponseWriter, r *http.Request) {
-	var todo models.Todo
+// @Router /api/rental [post]
+func CreateRental(w http.ResponseWriter, r *http.Request) {
+	// TODO: make function read trailer_id and user_id from body and use in the db function
+	var trailerId int
+	var userId int
 
-	err := json.NewDecoder(r.Body).Decode(&todo)
+	err := json.NewDecoder(r.Body).Decode()
+
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	err = db.CreateTodo(&todo)
+	err = db.CreateRental(trailerId, userId)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
