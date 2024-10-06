@@ -9,10 +9,6 @@ import (
 	// "rental_service/models"
 )
 
-// TODO: getalltrailers with location - addresses (search by zipcode)
-
-// TODO: create new rental - need user login before. ("guest"-user service, / maybe also payment service)
-
 // GetAllTrailers godoc
 // @Summary Get all trailers
 // @Description Fetches a list of all trailers from the database
@@ -52,34 +48,36 @@ func GetTrailerByZip(w http.ResponseWriter, r *http.Request) {
 	w.Write(res)
 }
 
+type CreateRentalRequest struct {
+	TrailerID int `json:"trailer_id"`
+	UserID    int `json:"user_id"`
+}
+
 // CreateRental godoc
 // @Summary Create a new rental
 // @Description Create a new rental entry in the database
 // @Tags rental
 // @Accept  application/json
 // @Produce application/json
-// @Param trailer_id query string true "trailerId"
-// @Param user_id query string true "userId"
+// @Param request body CreateRentalRequest true "CreateRentalRequest"
 // @Success 201 {object} models.Rental
 // @Failure 400 {string} string "Bad request"
 // @Failure 500 {string} string "Internal server error"
 // @Router /api/rental [post]
 func CreateRental(w http.ResponseWriter, r *http.Request) {
-	// TODO: make function read trailer_id and user_id from body and use in the db function
-	// var trailerId int
-	// var userId int
-	//
-	// err := json.NewDecoder(r.Body).Decode()
-	//
-	// if err != nil {
-	// 	http.Error(w, err.Error(), http.StatusInternalServerError)
-	// 	return
-	// }
-	// err = db.CreateRental(trailerId, userId)
-	// if err != nil {
-	// 	http.Error(w, err.Error(), http.StatusBadRequest)
-	// 	return
-	// }
-	//
+	var req CreateRentalRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil {
+		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		return
+	}
+
+	err = db.CreateRental(req.TrailerID, req.UserID)
+	if err != nil {
+		http.Error(w, "Failed to create rental", http.StatusInternalServerError)
+		return
+	}
+
 	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(map[string]string{"message": "Rental created successfully"})
 }
