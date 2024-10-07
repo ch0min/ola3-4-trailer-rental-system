@@ -5,10 +5,11 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/rs/cors"
 	"rental_service/db"
 	_ "rental_service/docs"
 	"rental_service/handlers"
+
+	"github.com/rs/cors"
 
 	httpSwagger "github.com/swaggo/http-swagger/v2"
 )
@@ -24,8 +25,11 @@ func run() (*http.ServeMux, error) {
 	mux.HandleFunc("/api/docs/", httpSwagger.WrapHandler)
 	mux.HandleFunc("GET /api/trailer", handlers.GetAllTrailers)
 	mux.HandleFunc("GET /api/trailer/{zip}", handlers.GetTrailerByZip)
-	mux.HandleFunc("POST /api/user", handlers.CreateUser)
 	mux.HandleFunc("POST /api/rental", handlers.CreateRental)
+
+	mux.HandleFunc("GET /api/user", handlers.GetAllUsers)
+	mux.HandleFunc("POST /api/user", handlers.CreateUser)
+	mux.HandleFunc("GET /api/user/{id}", handlers.GetUserById)
 
 	return mux, nil
 }
