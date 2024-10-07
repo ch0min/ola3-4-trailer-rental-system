@@ -147,8 +147,8 @@ paths:
       tags:
       - trailer
   /api/user:
-    post:
-      description: Fetches a list of all trailers from the database
+    get:
+      description: Retrieves all users from the database
       produces:
       - application/json
       responses:
@@ -158,7 +158,73 @@ paths:
             items:
               $ref: '#/definitions/models.Customer'
             type: array
-      summary: Get all trailers
+        "500":
+          description: error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get all users
       tags:
-      - trailers
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Creates a new user entry in the database
+      parameters:
+      - description: User Data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.Customer'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: user_id
+          schema:
+            additionalProperties:
+              type: integer
+            type: object
+        "400":
+          description: error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Creates a new user
+      tags:
+      - users
+  /api/user/{id}:
+    get:
+      description: Retrieves a user from the database based on the user ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Customer'
+        "500":
+          description: error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get a user by ID
+      tags:
+      - users
 swagger: "2.0"
