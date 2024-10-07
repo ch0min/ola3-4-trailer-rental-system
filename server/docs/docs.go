@@ -114,15 +114,15 @@ const docTemplate = `{
             }
         },
         "/api/user": {
-            "post": {
-                "description": "Fetches a list of all trailers from the database",
+            "get": {
+                "description": "Retrieves all users from the database",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "trailers"
+                    "users"
                 ],
-                "summary": "Get all trailers",
+                "summary": "Get all users",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -130,6 +130,106 @@ const docTemplate = `{
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/models.Customer"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Creates a new user entry in the database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Creates a new user",
+                "parameters": [
+                    {
+                        "description": "User Data",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Customer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "user_id",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/{id}": {
+            "get": {
+                "description": "Retrieves a user from the database based on the user ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get a user by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Customer"
+                        }
+                    },
+                    "500": {
+                        "description": "error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
                             }
                         }
                     }
@@ -173,12 +273,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "address": {
-                    "description": "AddressID   int     ` + "`" + `json:\"address_id\"` + "`" + `",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/models.Address"
-                        }
-                    ]
+                    "$ref": "#/definitions/models.Address"
                 },
                 "email": {
                     "type": "string"
@@ -198,12 +293,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "address": {
-                    "description": "AddressID int     ` + "`" + `json:\"address_id\"` + "`" + `",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/models.Address"
-                        }
-                    ]
+                    "$ref": "#/definitions/models.Address"
                 },
                 "id": {
                     "type": "integer"
@@ -255,12 +345,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "location": {
-                    "description": "LocationID         int      ` + "`" + `json:\"location_id\"` + "`" + `",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/models.Location"
-                        }
-                    ]
+                    "$ref": "#/definitions/models.Location"
                 },
                 "number": {
                     "type": "string"

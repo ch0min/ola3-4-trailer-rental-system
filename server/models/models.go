@@ -11,27 +11,24 @@ type Address struct {
 }
 
 type Location struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
-	// AddressID int     `json:"address_id"`
+	ID      int     `json:"id"`
+	Name    string  `json:"name"`
 	Address Address `json:"address"`
 }
 
 type Customer struct {
-	ID          int    `json:"id"`
-	Name        string `json:"name"`
-	Email       string `json:"email"`
-	PhoneNumber string `json:"phone_number"`
-	// AddressID   int     `json:"address_id"`
-	Address Address `json:"address"`
+	ID          int     `json:"id"`
+	Name        string  `json:"name"`
+	Email       string  `json:"email"`
+	PhoneNumber string  `json:"phone_number"`
+	Address     Address `json:"address"`
 }
 
 type Trailer struct {
-	ID                 int    `json:"id"`
-	Number             string `json:"number"`
-	AvailabilityStatus string `json:"availability_status"`
-	// LocationID         int      `json:"location_id"`
-	Location Location `json:"location"`
+	ID                 int      `json:"id"`
+	Number             string   `json:"number"`
+	AvailabilityStatus string   `json:"availability_status"`
+	Location           Location `json:"location"`
 }
 
 type Rental struct {
