@@ -273,12 +273,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "address": {
-                    "description": "AddressID   int     ` + "`" + `json:\"address_id\"` + "`" + `",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/models.Address"
-                        }
-                    ]
+                    "$ref": "#/definitions/models.Address"
                 },
                 "email": {
                     "type": "string"
@@ -298,12 +293,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "address": {
-                    "description": "AddressID int     ` + "`" + `json:\"address_id\"` + "`" + `",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/models.Address"
-                        }
-                    ]
+                    "$ref": "#/definitions/models.Address"
                 },
                 "id": {
                     "type": "integer"
@@ -355,12 +345,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "location": {
-                    "description": "LocationID         int      ` + "`" + `json:\"location_id\"` + "`" + `",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/models.Location"
-                        }
-                    ]
+                    "$ref": "#/definitions/models.Location"
                 },
                 "number": {
                     "type": "string"

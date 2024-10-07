@@ -22,9 +22,7 @@ definitions:
   models.Customer:
     properties:
       address:
-        allOf:
-        - $ref: '#/definitions/models.Address'
-        description: AddressID   int     `json:"address_id"`
+        $ref: '#/definitions/models.Address'
       email:
         type: string
       id:
@@ -37,9 +35,7 @@ definitions:
   models.Location:
     properties:
       address:
-        allOf:
-        - $ref: '#/definitions/models.Address'
-        description: AddressID int     `json:"address_id"`
+        $ref: '#/definitions/models.Address'
       id:
         type: integer
       name:
@@ -73,9 +69,7 @@ definitions:
       id:
         type: integer
       location:
-        allOf:
-        - $ref: '#/definitions/models.Location'
-        description: LocationID         int      `json:"location_id"`
+        $ref: '#/definitions/models.Location'
       number:
         type: string
     type: object
