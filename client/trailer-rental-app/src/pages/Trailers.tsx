@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import t1 from "../assets/images/trailer-dummy-1.jpeg";
 import t2 from "../assets/images/trailer-dummy-2.jpeg";
@@ -21,33 +21,55 @@ function Trailers() {
     const location = useLocation();
 
     const { zipCode } = (location.state as LocationState) || { zipCode: 0 };
+    const [trailers, setTrailers] = useState<Trailer[]>([])
+    const [loading, setLoading] = useState<boolean>(true)
+    const [error, setError] = useState<string | null>(null);
 
-    const trailers: Trailer[] = [
-        {
-            id: 1,
-            name: "Trailer 1",
-            price: "$50/day",
-            zipCode: 2770,
-            imageUrl: t1,
-        },
-        {
-            id: 2,
-            name: "Trailer 2",
-            price: "$60/day",
-            zipCode: 2770,
-            imageUrl: t2,
-        },
-        {
-            id: 3,
-            name: "Trailer 3",
-            price: "$55/day",
-            zipCode: 2300,
-            imageUrl: t3,
-        },
-    ];
+    useEffect(() => {
+        const fetchTrailers = async () => {
+            try {
+                const response = await fetch("http://localhost:4000/api/trailer")
+                if (!response.ok) {
+                    throw new Error("Failed to fetch trailers")
+                }
+                const data = await response.json()
+                setTrailers(data)
+                setLoading(false)
+            } catch (error) {
+                setError(error.message)
+                setLoading(false)
+            }
+        }
+        fetchTrailers()
+    }, [])
+
+
+    // const trailers: Trailer[] = [
+    //     {
+    //         id: 1,
+    //         name: "Trailer 1",
+    //         price: "$50/day",
+    //         zipCode: 2770,
+    //         imageUrl: t1,
+    //     },
+    //     {
+    //         id: 2,
+    //         name: "Trailer 2",
+    //         price: "$60/day",
+    //         zipCode: 2770,
+    //         imageUrl: t2,
+    //     },
+    //     {
+    //         id: 3,
+    //         name: "Trailer 3",
+    //         price: "$55/day",
+    //         zipCode: 2300,
+    //         imageUrl: t3,
+    //     },
+    // ];
 
     const availableTrailers = trailers.filter(
-        (trailer) => trailer.zipCode === zipCode
+        (trailer) => trailer.zipCode === zipCode 
     );
 
     const handleContinue = (id: number, imageUrl: string) => {
@@ -59,8 +81,14 @@ function Trailers() {
             <h2 className="text-2xl font-bold text-black mb-4">
                 Available Trailers
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {availableTrailers.map((trailer) => (
+            {loading ? (
+                <p>Loading...</p>
+            ) : error ? (
+                <p className="text-red-500">{error}</p>
+            ) : (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {availableTrailers.length > 0 ? (
+                availableTrailers.map((trailer) => (
                     <div
                         key={trailer.id}
                         className="p-4 bg-white rounded-md shadow-md"
@@ -83,11 +111,12 @@ function Trailers() {
                             Continue
                         </button>
                     </div>
-                ))}
-            </div>
-            {availableTrailers.length === 0 && (
+                ))
+            ) : (
                 <p>No trailers available for this zip code.</p>
             )}
+            </div>
+        )}
         </div>
     );
 }
