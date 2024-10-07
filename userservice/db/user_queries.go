@@ -1,7 +1,7 @@
 package db
 
 import (
-	"rental_service/models"
+	"user_service/models"
 )
 
 // Create a new customer in the database

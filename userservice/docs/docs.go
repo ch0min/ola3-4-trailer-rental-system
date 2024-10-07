@@ -15,104 +15,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/rental": {
-            "post": {
-                "description": "Create a new rental entry in the database",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "rental"
-                ],
-                "summary": "Create a new rental",
-                "parameters": [
-                    {
-                        "description": "CreateRentalRequest",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/handlers.CreateRentalRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/models.Rental"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/trailer": {
-            "get": {
-                "description": "Fetches a list of all trailers from the database",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "trailers"
-                ],
-                "summary": "Get all trailers",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/models.Trailer"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/trailer/{zip}": {
-            "get": {
-                "description": "Fetches a trailer based on the zipcode from the database",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "trailer"
-                ],
-                "summary": "Get a trailer",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Zip",
-                        "name": "zip",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.Trailer"
-                        }
-                    }
-                }
-            }
-        },
         "/api/user": {
             "get": {
                 "description": "Retrieves all users from the database",
@@ -238,17 +140,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "handlers.CreateRentalRequest": {
-            "type": "object",
-            "properties": {
-                "trailer_id": {
-                    "type": "integer"
-                },
-                "user_id": {
-                    "type": "integer"
-                }
-            }
-        },
         "models.Address": {
             "type": "object",
             "properties": {
@@ -285,69 +176,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "phone_number": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.Location": {
-            "type": "object",
-            "properties": {
-                "address": {
-                    "$ref": "#/definitions/models.Address"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.Rental": {
-            "type": "object",
-            "properties": {
-                "customer": {
-                    "$ref": "#/definitions/models.Customer"
-                },
-                "customer_id": {
-                    "type": "integer"
-                },
-                "end_time": {
-                    "type": "string"
-                },
-                "excess_fee": {
-                    "type": "number"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "rental_fee": {
-                    "type": "number"
-                },
-                "start_time": {
-                    "type": "string"
-                },
-                "trailer": {
-                    "$ref": "#/definitions/models.Trailer"
-                },
-                "trailer_id": {
-                    "type": "integer"
-                }
-            }
-        },
-        "models.Trailer": {
-            "type": "object",
-            "properties": {
-                "availability_status": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "location": {
-                    "$ref": "#/definitions/models.Location"
-                },
-                "number": {
                     "type": "string"
                 }
             }

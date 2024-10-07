@@ -3,8 +3,8 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
-	"rental_service/db"
-	"rental_service/models"
+	"user_service/db"
+	"user_service/models"
 )
 
 // GetAllUsers godoc

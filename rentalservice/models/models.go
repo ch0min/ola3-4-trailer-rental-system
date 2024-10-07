@@ -16,13 +16,6 @@ type Location struct {
 	Address Address `json:"address"`
 }
 
-type Customer struct {
-	ID          int     `json:"id"`
-	Name        string  `json:"name"`
-	Email       string  `json:"email"`
-	PhoneNumber string  `json:"phone_number"`
-	Address     Address `json:"address"`
-}
 
 type Trailer struct {
 	ID                 int      `json:"id"`
@@ -39,8 +32,7 @@ type Rental struct {
 	EndTime    *time.Time `json:"end_time,omitempty"`
 	RentalFee  float64    `json:"rental_fee"`
 	ExcessFee  *float64   `json:"excess_fee,omitempty"`
-	Customer   Customer   `json:"customer"`
-	Trailer    Trailer    `json:"trailer"`
+
 }
 
 type Partnership struct {

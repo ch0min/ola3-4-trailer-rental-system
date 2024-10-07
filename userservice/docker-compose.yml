@@ -1,6 +1,6 @@
 services:
   db:
-    container_name: postgres-trailer
+    container_name: postgres-trailer-userservice
     image: postgres
     environment:
       POSTGRES_USER: ${DB_USER}

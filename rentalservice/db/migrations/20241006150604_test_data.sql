@@ -10,10 +10,6 @@ INSERT INTO locations (location_name, address_id)
     ('Aarhus Ø', 2),
     ('Odense C', 3);
 
-INSERT INTO customers (name, email, phone_number, address_id)
-    VALUES ('Lars Hansen', 'lars.hansen@example.com', '12345678', 1),
-    ('Mette Sørensen', 'mette.sorensen@example.com', '23456789', 2),
-    ('Pia Jensen', 'pia.jensen@example.com', '34567890', 3);
 
 INSERT INTO trailers (number, availability_status, location_id)
     VALUES ('T-001', 'ledig', 1),

@@ -14,13 +14,6 @@ CREATE TABLE locations (
     address_id int REFERENCES addresses (address_id) ON DELETE SET NULL
 );
 
-CREATE TABLE customers (
-    customer_id serial PRIMARY KEY,
-    name varchar(255) NOT NULL,
-    email varchar(255) NOT NULL UNIQUE,
-    phone_number varchar(20) NOT NULL,
-    address_id int REFERENCES addresses (address_id) ON DELETE SET NULL
-);
 
 CREATE TABLE trailers (
     trailer_id serial PRIMARY KEY,
@@ -31,7 +24,7 @@ CREATE TABLE trailers (
 
 CREATE TABLE rentals (
     rental_id serial PRIMARY KEY,
-    customer_id int REFERENCES customers (customer_id) ON DELETE CASCADE,
+    customer_id int NOT NULL,
     trailer_id int REFERENCES trailers (trailer_id) ON DELETE CASCADE,
     start_time timestamp NOT NULL,
     end_time timestamp,

@@ -5,9 +5,9 @@ import (
 	"log"
 	"net/http"
 
-	"rental_service/db"
-	_ "rental_service/docs"
-	"rental_service/handlers"
+	"user_service/db"
+	_ "user_service/docs"
+	"user_service/handlers"
 
 	"github.com/rs/cors"
 
@@ -23,10 +23,6 @@ func run() (*http.ServeMux, error) {
 
 	// Routes
 	mux.HandleFunc("GET /api/docs/", httpSwagger.WrapHandler)
-	mux.HandleFunc("GET /api/trailer", handlers.GetAllTrailers)
-	mux.HandleFunc("GET /api/trailer/{zip}", handlers.GetTrailerByZip)
-	mux.HandleFunc("POST /api/rental", handlers.CreateRental)
-
 	mux.HandleFunc("GET /api/user", handlers.GetAllUsers)
 	mux.HandleFunc("POST /api/user", handlers.CreateUser)
 	mux.HandleFunc("GET /api/user/{id}", handlers.GetUserById)
@@ -43,6 +39,6 @@ func main() {
 
 	handler := cors.Default().Handler(mux)
 
-	fmt.Println("Running server on port 4000")
-	log.Fatal(http.ListenAndServe(":4000", handler))
+	fmt.Println("Running server on port http://localhost:4001")
+	log.Fatal(http.ListenAndServe(":4001", handler))
 }
