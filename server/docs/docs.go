@@ -30,18 +30,13 @@ const docTemplate = `{
                 "summary": "Create a new rental",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "trailerId",
-                        "name": "trailer_id",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "userId",
-                        "name": "user_id",
-                        "in": "query",
-                        "required": true
+                        "description": "CreateRentalRequest",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.CreateRentalRequest"
+                        }
                     }
                 ],
                 "responses": {
@@ -143,6 +138,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "handlers.CreateRentalRequest": {
+            "type": "object",
+            "properties": {
+                "trailer_id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "models.Address": {
             "type": "object",
             "properties": {
@@ -167,10 +173,12 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "address": {
-                    "$ref": "#/definitions/models.Address"
-                },
-                "address_id": {
-                    "type": "integer"
+                    "description": "AddressID   int     ` + "`" + `json:\"address_id\"` + "`" + `",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Address"
+                        }
+                    ]
                 },
                 "email": {
                     "type": "string"
@@ -190,10 +198,12 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "address": {
-                    "$ref": "#/definitions/models.Address"
-                },
-                "address_id": {
-                    "type": "integer"
+                    "description": "AddressID int     ` + "`" + `json:\"address_id\"` + "`" + `",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Address"
+                        }
+                    ]
                 },
                 "id": {
                     "type": "integer"
@@ -245,10 +255,12 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "location": {
-                    "$ref": "#/definitions/models.Location"
-                },
-                "location_id": {
-                    "type": "integer"
+                    "description": "LocationID         int      ` + "`" + `json:\"location_id\"` + "`" + `",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Location"
+                        }
+                    ]
                 },
                 "number": {
                     "type": "string"

@@ -1,4 +1,11 @@
 definitions:
+  handlers.CreateRentalRequest:
+    properties:
+      trailer_id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
   models.Address:
     properties:
       city:
@@ -15,9 +22,9 @@ definitions:
   models.Customer:
     properties:
       address:
-        $ref: '#/definitions/models.Address'
-      address_id:
-        type: integer
+        allOf:
+        - $ref: '#/definitions/models.Address'
+        description: AddressID   int     `json:"address_id"`
       email:
         type: string
       id:
@@ -30,9 +37,9 @@ definitions:
   models.Location:
     properties:
       address:
-        $ref: '#/definitions/models.Address'
-      address_id:
-        type: integer
+        allOf:
+        - $ref: '#/definitions/models.Address'
+        description: AddressID int     `json:"address_id"`
       id:
         type: integer
       name:
@@ -66,9 +73,9 @@ definitions:
       id:
         type: integer
       location:
-        $ref: '#/definitions/models.Location'
-      location_id:
-        type: integer
+        allOf:
+        - $ref: '#/definitions/models.Location'
+        description: LocationID         int      `json:"location_id"`
       number:
         type: string
     type: object
@@ -81,16 +88,12 @@ paths:
       - application/json
       description: Create a new rental entry in the database
       parameters:
-      - description: trailerId
-        in: query
-        name: trailer_id
+      - description: CreateRentalRequest
+        in: body
+        name: request
         required: true
-        type: string
-      - description: userId
-        in: query
-        name: user_id
-        required: true
-        type: string
+        schema:
+          $ref: '#/definitions/handlers.CreateRentalRequest'
       produces:
       - application/json
       responses:

@@ -1,62 +1,154 @@
 package db
 
 import (
-	// "database/sql"
-	"log"
-
 	"rental_service/models"
+	"time"
 )
 
 func FetchAllTrailers() ([]models.Trailer, error) {
 	trailers := []models.Trailer{}
-	//TODO: change sql query
-	rows, err := DB.Query("SELECT id, title, text, isCompleted, category, deadline FROM todo")
+
+	rows, err := DB.Query(`
+		SELECT
+			t.trailer_id,
+			t.number,
+			t.availability_status,
+			l.location_id,
+			l.location_name,
+			a.address_id,
+			a.street,
+			a.city,
+			a.state,
+			a.zipcode
+		FROM
+			trailers t
+		JOIN
+			locations l ON t.location_id = l.location_id
+		JOIN
+			addresses a ON l.address_id = a.address_id;
+	`)
+
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var trailer models.Trailer
+		var location models.Location
+		var address models.Address
 
-		//TODO: change fields to match trailer
-		// var category sql.NullString
-		// var deadline sql.NullTime
-
-		err := rows.Scan()
+		err := rows.Scan(
+			&trailer.ID,
+			&trailer.Number,
+			&trailer.AvailabilityStatus,
+			&location.ID,
+			&location.Name,
+			&address.ID,
+			&address.Street,
+			&address.City,
+			&address.State,
+			&address.Zipcode,
+		)
 		if err != nil {
-			log.Fatal(err)
+			return nil, err
 		}
+
+		location.Address = address
+		trailer.Location = location
 
 		trailers = append(trailers, trailer)
 	}
-	if err != nil {
-		log.Fatal(err)
+
+	if err = rows.Err(); err != nil {
+		return nil, err
 	}
-	return trailers, err
+	return trailers, nil
+
 }
 
-func GetTrailerByZip(zip string) (models.Trailer, error) {
-	trailer := models.Trailer{}
+func GetTrailerByZip(zipCode string) ([]models.Trailer, error) {
+	trailers := []models.Trailer{}
 
-	// TODO: change sql
-	row := DB.QueryRow("SELECT id, title, text, isCompleted, category, deadline FROM todo WHERE id = $1", zip)
+	query := `
+		SELECT
+			t.trailer_id,
+			t.number,
+			t.availability_status,
+			l.location_id,
+			l.location_name,
+			a.address_id,
+			a.street,
+			a.city,
+			a.state,
+			a.zipcode
+		FROM
+			trailers t
+		JOIN
+			locations l ON t.location_id = l.location_id
+		JOIN
+			addresses a ON l.address_id = a.address_id
+		WHERE
+			a.zipcode = $1;
+	`
 
-	// TODO: update fields to match trailer
-	err := row.Scan()
+	rows, err := DB.Query(query, zipCode)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var trailer models.Trailer
+		var location models.Location
+		var address models.Address
+
+		err := rows.Scan(
+			&trailer.ID,
+			&trailer.Number,
+			&trailer.AvailabilityStatus,
+			&location.ID,
+			&location.Name,
+			&address.ID,
+			&address.Street,
+			&address.City,
+			&address.State,
+			&address.Zipcode,
+		)
+		if err != nil {
+			return nil, err
+		}
+
+		location.Address = address
+		trailer.Location = location
+
+		trailers = append(trailers, trailer)
 	}
 
-	return trailer, err
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return trailers, nil
 }
 
 func CreateRental(trailerId int, userId int) error {
-	// TODO change implementation
-	// var lastInsertId int
-	// query := `INSERT INTO todo (title, text, iscompleted, category, deadline)
-	// 		  VALUES ($1, $2, $3, $4, $5) RETURNING id`
-	// err := DB.QueryRow().Scan(&lastInsertId)
-	// return err
+	query := `
+		INSERT INTO rentals (customer_id, trailer_id, start_time, rental_fee)
+		VALUES ($1, $2, $3, $4)
+		RETURNING rental_id;
+	`
+
+	startTime := time.Now()
+
+	rentalFee := 100.0 // Should there be a rental fee?
+	//maybe also add end_time and excess_fee
+
+	var rentalID int
+	err := DB.QueryRow(query, userId, trailerId, startTime, rentalFee).Scan(&rentalID)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }

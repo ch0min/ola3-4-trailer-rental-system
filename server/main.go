@@ -21,7 +21,7 @@ func run() (*http.ServeMux, error) {
 	mux := http.NewServeMux()
 
 	// Routes
-	mux.HandleFunc("/api/docs/", httpSwagger.WrapHandler)
+	mux.HandleFunc("GET /api/docs/", httpSwagger.WrapHandler)
 	mux.HandleFunc("GET /api/trailer", handlers.GetAllTrailers)
 	mux.HandleFunc("GET /api/trailer/{zip}", handlers.GetTrailerByZip)
 	mux.HandleFunc("POST /api/user", handlers.CreateUser)
