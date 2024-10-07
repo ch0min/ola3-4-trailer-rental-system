@@ -5,12 +5,10 @@ function Payment() {
     const { id } = useParams<{ id: string }>();
     const location = useLocation();
 
-    const { zipCode, imageUrl } = (location.state as {
+    const { zipCode } = (location.state as {
         zipCode: number;
-        imageUrl: string;
     }) || {
         zipCode: 0,
-        imageUrl: "",
     };
 
     return (
@@ -33,11 +31,11 @@ function Payment() {
                     />
                 </div>
                 <div>
-                    <img
+                    {/* <img
                         src={imageUrl}
                         alt={`Trailer ${id}`}
                         className="w-full h-40 object-cover rounded-md mb-2"
-                    />
+                    /> */}
                     <p className="text-lg">Trailer ID: {id}</p>
                     <p className="text-lg">Zip Code: {zipCode}</p>
                 </div>
