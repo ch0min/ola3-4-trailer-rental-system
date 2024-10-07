@@ -1,9 +1,27 @@
-# Trailer Rental System
+## Trailer Rental System
 **Group D**
 
 ---
 
-## Technology Stack
+### Repository Structure
+
+This repository contains two branches:
+- **`main` branch**: Contains the monolithic solution for the MyTrailer application.
+- **`microservice` branch**: Contains the refactored microservice architecture solution, where the monolithic application has been split into services.
+
+### How to Navigate the Project
+
+1. **Monolith Solution (Main Branch)**:
+   - The `main` branch contains the initial implementation of the Trailer Rental System as a **monolithic application**. All components (rental management, user management, payments, etc.) are part of a single application codebase.
+   - **How to run**: Follow the instructions in the `README` on the `main` branch for setup and running the monolith.
+
+2. **Microservice Solution (Microservice Branch)**:
+   - The `microservice` branch demonstrates how we refactored the monolithic solution into separate **microservices**. Each service (rental, user, payment, etc.) runs independently and communicates with other services through APIs and event-driven messaging.
+   - **How to run**: Follow the `README` on the `microservice` branch to understand how to set up and run the individual services using Docker or Docker Compose.
+
+---
+
+### Technology Stack
 
 **Version Control Platform**:  
 - Git - GitHub
@@ -38,7 +56,7 @@
 
 ---
 
-## Strategic Design
+### Strategic Design
 
 **Core Domain**:  
 The core of MyTrailer is the trailer rental process, including booking, insurance, and payments.
@@ -52,11 +70,11 @@ The core of MyTrailer is the trailer rental process, including booking, insuranc
 ### Bounded Context Diagram
 This diagram shows the different bounded contexts and their relationships.
 
-![](docs/models/bcd.png)
+![image](docs/models/bcd.png)
 
 ---
 
-## Tactical Design with DDD
+### Tactical Design with DDD
 
 **Entities, Value Objects, and Aggregates**:
 
@@ -75,11 +93,11 @@ This diagram shows the different bounded contexts and their relationships.
 - **Value Object: Location**
   - Properties: `locationName`, `locationAddress`
 
-![](docs/models/domain.png)
+![image](docs/models/domain.png)
 
 ---
 
-## Event-Driven Architecture (Messaging Flow)
+### Event-Driven Architecture (Messaging Flow)
 
 Since the system has several independent components (rental, payment, partnerships), using an event-driven architecture could help:
 
@@ -91,21 +109,24 @@ Since the system has several independent components (rental, payment, partnershi
 
 ---
 
-## C4 Diagrams
+### C4 Diagrams
 
 We chose the **Context** and **Component** diagrams because they provide the right balance of abstraction for this project. The Context diagram helps us visualize how the system interacts with external actors, while the Component diagram shows the internal structure of key services. This allows us to focus on system design without getting too detailed or technical, making it suitable for this small project within the given timeframe.
 
+- **System Architecture**: The MyTrailer system consists of several services, including rental, user and with further development payment, and partnership services.
+![image](docs/models/architecture_diagram.png)
+
 - **Context Diagram**: Illustrates how the MyTrailer system interacts with external entities like the app, payment gateways, and store partners.
-![](docs/models/c4_cntx.png)
+![image](docs/models/c4_cntx.png)
 
 ---
 
 - **Component Diagram**: Shows the internal services of the system, such as `RentalService`, `PaymentService`, `PartnershipService`, etc.
-![](docs/models/c4_comp.png)
+![image](docs/models/c4_comp.png)
 
 ---
 
-## Behavior-Driven Development (BDD)
+### Behavior-Driven Development (BDD)
 Example of BDD usage in this project:
 
 **Scenario: Customer books a trailer**  
@@ -116,7 +137,7 @@ Example of BDD usage in this project:
 
 ---
 
-## Ubiquitous Language
+### Ubiquitous Language
 
 - **Trailer**: The rental item placed at partner locations.
 - **Rental**: A short-term or long-term booking of a trailer.
@@ -126,7 +147,7 @@ Example of BDD usage in this project:
 
 ---
 
-## Definition of DONE
+### Definition of DONE
 
 - **Model Completeness**: When the core entities (`Trailer`, `Rental`, `Customer`, `Location`) and their behaviors are fully modeled.
 - **Messaging Flow**: When event-driven messages (`TrailerBooked`, `PaymentProcessed`, etc.) are identified and mapped between services.
@@ -135,3 +156,14 @@ Example of BDD usage in this project:
 
 ---
 
+### Instructions to Run
+
+1. **Monolith Solution**: (On `main` branch)
+   - Clone the repository.
+   - Follow the `README.md` on the `main` branch for running the monolithic solution.
+
+2. **Microservice Solution**: (On `microservice` branch)
+   - Switch to the `microservice` branch: `git checkout microservice`.
+   - Follow the `README.md` on the `microservice` branch to run the individual services.
+
+---
