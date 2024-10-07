@@ -8,7 +8,7 @@ import (
 func CreateUser(user models.Customer) (int, error) {
 	// Prepare the SQL statement
 	stmt, err := DB.Prepare(`
-		INSERT INTO customers (name, email, phone_number, address_id)
+		INSERT INTO customers (name, email, phone_number)
 		VALUES ($1, $2, $3, $4) RETURNING customer_id`)
 	if err != nil {
 		return 0, err // Return the error instead of logging and terminating
@@ -19,7 +19,7 @@ func CreateUser(user models.Customer) (int, error) {
 	var customerID int
 
 	// Execute the query and scan the result into customerID
-	err = stmt.QueryRow(user.Name, user.Email, user.PhoneNumber, user.AddressID).Scan(&customerID)
+	err = stmt.QueryRow(user.Name, user.Email, user.PhoneNumber).Scan(&customerID)
 	if err != nil {
 		return 0, err
 	}
