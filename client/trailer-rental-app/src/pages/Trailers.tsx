@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 import t1 from "../assets/images/trailer-dummy-1.jpeg";
-import t2 from "../assets/images/trailer-dummy-2.jpeg";
-import t3 from "../assets/images/trailer-dummy-3.jpeg";
+// import t2 from "../assets/images/trailer-dummy-2.jpeg";
+// import t3 from "../assets/images/trailer-dummy-3.jpeg";
 
 interface Trailer {
     id: number;
@@ -22,27 +23,16 @@ function Trailers() {
 
     const { zipCode } = (location.state as LocationState) || { zipCode: 0 };
     const [trailers, setTrailers] = useState<Trailer[]>([])
-    const [loading, setLoading] = useState<boolean>(true)
-    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const fetchTrailers = async () => {
-            try {
-                const response = await fetch("http://localhost:4000/api/trailer")
-                if (!response.ok) {
-                    throw new Error("Failed to fetch trailers")
-                }
-                const data = await response.json()
-                setTrailers(data)
-                setLoading(false)
-            } catch (error) {
-                setError(error.message)
-                setLoading(false)
-            }
+        if (zipCode) {
+            axios.get(`/api/trailer/${zipCode}`)
+            .then(response => setTrailers(response.data))
+            .catch(error => console.error("Error fetching trailers:", error))
         }
-        fetchTrailers()
-    }, [])
+    }, [zipCode])
 
+    console.log(trailers)
 
     // const trailers: Trailer[] = [
     //     {
@@ -68,9 +58,9 @@ function Trailers() {
     //     },
     // ];
 
-    const availableTrailers = trailers.filter(
-        (trailer) => trailer.zipCode === zipCode 
-    );
+    // const availableTrailers = trailers.filter(
+    //     (trailer) => trailer.zipCode === zipCode 
+    // );
 
     const handleContinue = (id: number, imageUrl: string) => {
         navigate(`/payment/${id}`, { state: { zipCode, imageUrl } });
@@ -81,20 +71,16 @@ function Trailers() {
             <h2 className="text-2xl font-bold text-black mb-4">
                 Available Trailers
             </h2>
-            {loading ? (
-                <p>Loading...</p>
-            ) : error ? (
-                <p className="text-red-500">{error}</p>
-            ) : (
+     
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {availableTrailers.length > 0 ? (
-                availableTrailers.map((trailer) => (
+                    {Array.isArray(trailers) && trailers.length > 0 ? (
+                trailers.map((trailer) => (
                     <div
                         key={trailer.id}
                         className="p-4 bg-white rounded-md shadow-md"
                     >
                         <img
-                            src={trailer.imageUrl}
+                            src={trailer.imageUrl || t1}
                             alt={trailer.name}
                             className="w-full h-40 object-cover rounded-md mb-2"
                         />
@@ -116,7 +102,6 @@ function Trailers() {
                 <p>No trailers available for this zip code.</p>
             )}
             </div>
-        )}
         </div>
     );
 }

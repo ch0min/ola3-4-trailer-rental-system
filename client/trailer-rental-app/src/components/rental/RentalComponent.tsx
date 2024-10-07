@@ -7,7 +7,7 @@ function RentalComponent() {
 
     const startTimeRef = useRef<HTMLInputElement | null>(null);
     const endTimeRef = useRef<HTMLInputElement | null>(null);
-    const [zipCode, setZipCode] = useState("");
+    const [zipCode, setZipCode] = useState<string>("")
 
     const handleCalendarClick = (
         inputRef: React.RefObject<HTMLInputElement>
@@ -17,11 +17,12 @@ function RentalComponent() {
         }
     };
 
-    const handleSearch = (e: React.FormEvent) => {
+    const handleSearch = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (zipCode) {
-            navigate("/trailers", { state: { zipCode: Number(zipCode) } });
+                navigate("/trailers", { state: { zipCode: Number(zipCode) } });
+    
         }
     };
 
