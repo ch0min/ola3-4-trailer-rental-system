@@ -39,7 +39,7 @@ This repository contains two branches:
 ### Development Stack
 
 **Backend Development**:  
-- Golang - (Fiber Framework)
+- Golang
 
 **Frontend Development**:  
 - TypeScript - (React Framework)
