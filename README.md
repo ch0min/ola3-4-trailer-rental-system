@@ -29,7 +29,7 @@ This repository contains two branches:
 **Text Editing and Development Environment**:  
 - VScode/Neovim  
 - DBeaver  
-- Postman
+- Swagger
 
 **General Online Research Tools**:  
 - Stack Overflow  
