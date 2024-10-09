@@ -160,10 +160,10 @@ Example of BDD usage in this project:
 
 1. **Monolith Solution**: (On `main` branch)
    - Clone the repository.
-   - Follow the `README.md` on the `main` branch for running the monolithic solution.
+   - Follow the `README.md` in the `server/` for running the monolithic solution.
 
 2. **Microservice Solution**: (On `microservice` branch)
    - Switch to the `microservice` branch: `git checkout microservice`.
-   - Follow the `README.md` on the `microservice` branch to run the individual services.
+   - Follow the `README.md` in each service folder `userservice/` & `rentalservice/` to run the individual services.
 
 ---
