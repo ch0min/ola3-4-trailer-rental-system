@@ -166,4 +166,9 @@ Example of BDD usage in this project:
    - Switch to the `microservice` branch: `git checkout microservice`.
    - Follow the `README.md` in each service folder `userservice/` & `rentalservice/` to run the individual services.
 
+
 ---
+
+### Swagger documentation
+
+The swagger api documentation can be found when running the backend on `localhost:4000/api/docs` and also `localhost:4001/api/docs` for the microservice solution.
