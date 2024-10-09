@@ -68,7 +68,7 @@ The core of MyTrailer is the trailer rental process, including booking, insuranc
 - **Company Partnerships**: Manages agreements with the companies offering trailer parking space.
 
 ### Bounded Context Diagram
-This diagram shows the different bounded contexts and their relationships.
+This diagram shows the different bounded contexts and their relationships. This is an exampel of a more complete system with payment and partners.
 
 ![image](docs/models/bcd.png)
 
