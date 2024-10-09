@@ -68,7 +68,7 @@ The core of MyTrailer is the trailer rental process, including booking, insuranc
 - **Company Partnerships**: Manages agreements with the companies offering trailer parking space.
 
 ### Bounded Context Diagram
-This diagram shows the different bounded contexts and their relationships. This is an exampel of a more complete system with payment and partners.
+This diagram shows the different bounded contexts and their relationships. This is an example of a more complete system with payment and partners.
 
 ![image](docs/models/bcd.png)
 
@@ -87,8 +87,8 @@ This diagram shows the different bounded contexts and their relationships. This 
 - **Entity: Customer**
   - Properties: `name`
 
-- **Value Object: ContactDetails**
-  - Properties: `email`, `phoneNumber`, `address`
+- **Value Object: Address**
+  - Properties: `address`
 
 - **Value Object: Location**
   - Properties: `locationName`, `locationAddress`
@@ -111,7 +111,7 @@ Since the system has several independent components (rental, payment, partnershi
 
 ### C4 Diagrams
 
-We chose the **Context** and **Component** diagrams because they provide the right balance of abstraction for this project. The Context diagram helps us visualize how the system interacts with external actors, while the Component diagram shows the internal structure of key services. This allows us to focus on system design without getting too detailed or technical, making it suitable for this small project within the given timeframe.
+We chose the **Context** and **Component** diagrams because they provide the right balance of abstraction for this project. The Context diagram is examples of the system if we wanted to scale it in the fure and it helps us visualize how the system interacts with external actors, while the Component diagram shows the internal structure of key services. This allows us to focus on system design without getting too detailed or technical, making it suitable for this small project within the given timeframe.
 
 - **System Architecture**: The MyTrailer system consists of several services, including rental, user and with further development payment, and partnership services.
 ![image](docs/models/architecture_diagram.png)
